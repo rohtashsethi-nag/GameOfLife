@@ -1,2 +1,2 @@
-# GameOfLife
-A JavaScript implementation of famous game Convoy's Game of Life
+# Game of Life
+A JavaScript implementation of famous game Conway's Game of Life
