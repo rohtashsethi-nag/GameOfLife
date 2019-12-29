@@ -67,18 +67,34 @@
 
 })();
 
-var game = new Life([
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0]
-])
+(function() {
 
-console.log(game + ' ' );
+    _ = self.LifeView = function(table, size) {
+        this.grid = table;
+        this.size = size;
+        this.checkboxes = [];
+        this.createGrid();
+    }
 
-game.next();
+    _.prototype = {
+        createGrid: function() {
+            let fragment = document.createDocumentFragment();
+            for (let i = 0; i < this.size; i++) {
+                let $tr = document.createElement('tr');
+                this.checkboxes[i] = [];
+                for (let j = 0; j < this.size; j++) {
+                    $td = document.createElement('td');
+                    $checkbox = document.createElement('input');
+                    $checkbox.type = 'checkbox';
+                    this.checkboxes[i][j] = $checkbox;
+                    $td.appendChild($checkbox);
+                    $tr.appendChild($td);
+                }
+                fragment.appendChild($tr);
+            }
+            this.grid.appendChild(fragment);
+        }
+    }
+})();
 
-console.log(game + ' ' );
+var lifeView = new LifeView(document.getElementById('grid'), 12);
