@@ -1,7 +1,6 @@
 (function() {
 
     _ = self.Life = function(seed) {
-        this.seed = seed;
         this.height = seed.length;
         this.width = seed[0].length;
         this.board = cloneArray(seed);
@@ -38,7 +37,7 @@
                 prevRow[y - 1], prevRow[y], prevRow[y + 1],
                 board[x][y - 1], board[x][y + 1],
                 nextRow[y - 1], nextRow[y], nextRow[y + 1]
-             ].reduce(prev, cur => prev += +!!cur, 0);
+             ].reduce((prev, cur) => prev += +!!cur, 0);
         },
         liveCheck: function(aliveNeighours, cell) {
             if (cell) {
@@ -93,6 +92,19 @@
                 fragment.appendChild($tr);
             }
             this.grid.appendChild(fragment);
+        },
+        get board() {
+            return this.checkboxes.map(row => row.map(checkbox => +checkbox.checked));
+        },
+        set board(board) {
+            this.checkboxes.forEach((row, i) => row.forEach((checkbox, j) => checkbox.checked = board[i][j]));
+        },
+        play() {
+            this.game = new Life(this.board);
+        },
+        next() {
+            this.game.next();
+            this.board = this.game.board;
         }
     }
 })();
